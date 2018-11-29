@@ -29,21 +29,25 @@
 </template>
 
 <script>
-	import {mapActions} from 'vuex'
+	import {mapState,mapActions} from 'vuex'
 	import item from '../component/item.vue'
 	export default {
-		data() {
-			return {
-				
-			};
+		computed:{
+			...mapState([
+				'newsList'
+			])
 		},
 		methods:{
 			...mapActions([
-				'handleClick'
+				'handleClick',
+				'initItem'
 			])
 		},
 		components:{
 			item
+		},
+		created(){
+			this.initItem()
 		}
 	}
 </script>

@@ -29,10 +29,8 @@
 				'getDetail'
 			])
 
-		},
-		created: () => {
-			this.initItem
 		}
+		
 	}
 </script>
 

@@ -6,13 +6,22 @@ import Router from 'vue-router'
 import VueResource from 'vue-resource'
 import axios from 'axios';
 import store from './store/index'
-
+import {mapState} from 'vuex'
 Vue.prototype.$axios = axios
 axios.defaults.headers.post["Content-type"] = "application/json"
 
 Vue.use(ElementUI)
 Vue.use(Router)
-
+router.beforeEach((to,f,next)=>{
+	if(to.name == "home"){
+		store.state.newsDetail={}
+		next()
+	}else{
+		next()
+	}
+	
+	
+})
 
 new Vue({
   el: '#app',

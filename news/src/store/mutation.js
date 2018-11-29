@@ -2,6 +2,7 @@ import axios from 'axios';
 export default{
 		getItem(state,tab){
 			let name = tab.$options.propsData.name
+			
 			axios.get('/api1',{
 				params:{
 					appkey:'4d8f989a78e01bc099e147f362fb16ee',
@@ -17,7 +18,10 @@ export default{
 					appkey:'4d8f989a78e01bc099e147f362fb16ee',
 					newsId:newID
 				}
-			}).then(response => (state.newsDetail=response.data.result.result))
+			}).then(response =>{
+				
+				state.newsDetail=response.data.result.result;
+			})
 			.catch(err=>(console.log(err)))
 		},
 		initItem(state){
