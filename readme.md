@@ -17,9 +17,7 @@ npm install 或 yarn(推荐)
 npm run dev
 ```
 
+**vue的生命周期** 
 
-
-``` git clone 
-
-```
+![cycle](./images/lifecycle.png)
 
