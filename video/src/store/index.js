@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state:{
       result:[],
       recommend:[],
-			mainDetail:[]
+			mainDetail:[],
+			playUrl:""
   },
   getters:{
     getRecommend:state =>{

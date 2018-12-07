@@ -9,44 +9,51 @@
 									</el-carousel-item>
 						 </div>
 						</el-carousel>
-          <div style="padding-left: 50px">
-            <a href="#" v-for="item in result" style="text-decoration: none;padding-right: 20px">{{item.name}}</a>
+          <div style="padding-left: 30px">
+            <router-link :to='{name:"detail"}' 
+						tag="a" target="_blank" v-for="item in result"class="MyA" 
+						@click.native="SendLink('www.baidu.com')">
+						{{item.name}}</router-link>
           </div>
         </el-header>
         <el-main class="cm1" >
-					<div v-for=" it in mainDetail" style="overflow: hidden;">
+					<div v-for=" it in mainDetail" >
 						<p>{{it[0]}}</p>
 								<div style="position: relative;overflow: hidden;">
 										<div v-for="w in it[1]" style="width: 200px; float: left;margin: 15px;">
-											<el-card :body-style="{ padding: '0px' }" shadow="hover"	>
-												<img :src="w.data.header.icon" style="height: 200px;width: 200px;" />
-												<div>
-													<p style="height: 30px;">{{w.data.header.title}}</p>
-												</div>
-											</el-card>
+											<div style="overflow: hidden;">
+												<p>w.data.content.data.playUrl</p>
+												<router-link :to="{name:'detail'}" tag="a" @click.native="getUrl(w.data.content.data.playUrl)" target="_self">
+													<el-card :body-style="{ padding: '0px' }" shadow="hover"	>
+														<img :src="w.data.header.icon" style="height: 200px;width: 200px;" />
+														<div>
+															<p style="height: 30px;">{{w.data.header.title}}</p>
+														</div>
+													</el-card>
+											</router-link>
+											</div>
 											</div>
 								</div>
+								<div></div>
 					</div>
-					
+
         </el-main>
         <el-footer class="cf"></el-footer>
       </el-container>
+			
 	</div>
 </template>
 
 <script>
-	function getItOfDat(data){
-		let item = data.data;
-		console.log(item)
-	}
   import {mapState,mapGetters,mapActions} from 'vuex'
-	import store from '../store/index.js'
-	export default {
+  import bus from '../assets/bus'
+  export default {
 	computed:{
 		  ...mapState([
 		    'result',
         'recommend',
-				'mainDetail'
+				'mainDetail',
+				'playUrl'
       ]),
       ...mapGetters([
         'getRecommend',
@@ -55,8 +62,13 @@
     },
     methods:{
 		  ...mapActions([
-		    'getResult'
-      ])
+		    'getResult',
+				'getUrl'
+      ]),
+      SendLink(link){
+				bus.$emit('A',link);
+		    
+      }
     },
     created(){
 		  this.getResult();
@@ -64,6 +76,12 @@
 	}
 </script>
 
+
+//
+
 <style>
- 
+  .MyA{
+    text-decoration: none;
+    padding-right: 20px
+  }
 </style>
