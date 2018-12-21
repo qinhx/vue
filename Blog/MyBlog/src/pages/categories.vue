@@ -1,22 +1,49 @@
 <template>
     <div>
-        <el-tabs tab-position="left" style="height:700px">
-            <el-tab-pane label="node" name="node">node</el-tab-pane>
-            <el-tab-pane label="css" name="css">CSS</el-tab-pane>
-            <el-tab-pane label="less" name="less">Less</el-tab-pane>
-            <el-tab-pane label="html" name="HTMl">HTML</el-tab-pane>
-            <el-tab-pane label="Vue" name="Vue.js">Vue.js</el-tab-pane>
-            <el-tab-pane label="code" name="short Code">短码之美</el-tab-pane>
-            <el-tab-pane label="algorithm" name="algorithm">algoritm</el-tab-pane>
-            <el-tab-pane label="jQeury" name="jQeury">jQeury</el-tab-pane>
-            <el-tab-pane label="webpack" name="webpack">Webpack</el-tab-pane>
-            <el-tab-pane label="react" name="react">react</el-tab-pane>
-        </el-tabs>
+        <el-row>
+            <el-col :span="3">
+                <el-menu v-for="(it,index) in icon" :key="index" :default-active="cate[1]" background-color="#545c64"  active-text-color="#ffd04b"
+                 text-color="#fff" @select="handleSelect">
+                    <el-menu-item :index="cate[index]">
+                        <template slot="title">
+                            <div>
+                                <p><i :class="it"></i>{{cate[index]}}</p>
+                            </div>
+                        </template>
+                    </el-menu-item>
+                </el-menu>
+        </el-col>
+        <el-col :span="18">
+            <p>{{cateItem}}</p>
+        </el-col>
+        </el-row>
     </div>
 </template>
 <script>
-    
+import {mapState,mapMutations,mapActions} from 'vuex'
+import store from '../state/index'
+    export default{
+        data() {
+            return {
+                cate:[],
+                icon:['el-icon-mobile-phone','el-icon-location','el-icon-menu','el-icon-tickets','el-icon-document','el-icon-service','el-icon-rank'],
+                cateitem:[]
+            }
+        },
+        methods:{
+            ...mapActions([
+                'getDetail',
+                'getCategory'
+            ]),
+             handleSelect(key,keyindex){
+                this.getCategory(key)
+                this.cateitem = store.state.cateItem//需要异步处理 promise 的用法
+            }
+        },
+        created() {
+            this.cate = store.state.category
+        },
+    }
 </script>
 <style scoped>
-
 </style>

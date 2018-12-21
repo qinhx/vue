@@ -5,7 +5,9 @@ import actions from './actions'
 Vue.use(Vuex)
 export default new Vuex.Store({
     state:{
-        detail:[]
+        detail:[],
+        category:[],
+        cateItem:[]
     },
     mutations,
     actions

@@ -6,7 +6,6 @@ var logger = require('morgan');
 var stylus = require('stylus');
 var http= require('http')
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var api = require('./routes/api')
 var app = express();
 var mongoskin = require('mongoskin')
@@ -15,9 +14,8 @@ const db =  mongoskin.db(dbUrl)
 const collections = {
   note: db.collection('note'),
   archives: db.collection('archives'),
-  categories: db.collection('categories'),
-  articles:db.collection('articles'),
-  agent:db.collection('agent')
+  category: db.collection('category'),
+  agent:db.collection('agent')//包含所有的
 };
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,20 +36,10 @@ app.use((req,res,next)=>{
   return  next();
 })
  
-app.use('/', indexRouter);
-app.get('/users', usersRouter.user);
-app.get('/done',usersRouter.done);
-app.get('/admin',usersRouter.admin)
-app.get('/note',usersRouter.note)
-app.get('/category',usersRouter.categories)
-app.get('/archives',usersRouter.archives)
-app.post('/api/note',api.note)
-app.get('/api/NoteList',api.noteList)
-app.post('/api/category',api.category)
-app.get('/api/categorieslist',api.cateList)
-app.post('/api/archives',api.archive)
-app.get('/api/archivesList',api.archiveList)
-app.get('/api/detial',api.detail)
+
+app.get('/api/detial',api.detail) // has been used to the home pages
+app.get('/api/categories',api.category)
+app.get('/api/cateItem',api.categoryItem)
 // app.get('/api/')
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
