@@ -26,7 +26,7 @@
         },
     }
 </script>
-<style>
+<style scoped>
     .el-card{
      width: 250px;
      float: left;   

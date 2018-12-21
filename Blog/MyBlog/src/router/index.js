@@ -11,9 +11,10 @@ export default new Router({
   mode:'history',
   routes: [
     {name:"home",path:'/',component:home},
+    {path:'/home',component:home},
     {name:'note',path:'/note',component:note},
     {name:'categories',path:'/categories',component:categories},
-    {name:'archives',path:'.archives',component:archives},
+    {name:'archives',path:'/archives',component:archives},
     {name:'detial',path:'/detial/:id',component:detial}
   ]
 })

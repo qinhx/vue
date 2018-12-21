@@ -6,20 +6,21 @@
             <el-col :span="3">
               <h4 style="margin-top:33px">Welcome to My Blog</h4>
             </el-col>
-            <el-col :span="2" :offset="4">
-               <router-link :to="{name:'home'}" tag="a" >home </router-link>
-            </el-col>
-            <el-col :span="3">
-              <router-link :to="{name:'note'}" tag="a" >note </router-link>
-            </el-col>
-            <el-col :span="3">
-              <router-link :to="{name:'categories'}" tag="a" >categories </router-link>
-            </el-col>
-            <el-col :span="3">
-              <router-link :to="{name:'archives'}" tag="a" >archives </router-link>
-            </el-col>
-            <el-col :span="3">
-              <a href="https://github.com/qinhx/">github</a>
+            <el-col :offset="10" :span="8">
+            <el-menu mode="horizontal" background-color="grey" router="true" text-color="black">
+              <el-menu-item index="home">
+                <span>home</span>
+              </el-menu-item>
+              <el-menu-item index="note">
+                <span>note</span>
+              </el-menu-item>
+              <el-menu-item index="categories">
+                <span>categories</span>
+              </el-menu-item>
+              <el-menu-item index="archives">
+                <span>archives</span>
+              </el-menu-item>
+            </el-menu>
             </el-col>
         </el-row>
       </el-header>
@@ -37,7 +38,12 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  methods: {
+    handleMenu(){
+
+    }
+  },
 }
 </script>
 
