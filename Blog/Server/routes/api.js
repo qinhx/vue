@@ -51,7 +51,7 @@ exports.archiveList = (req,res,next)=>{
         })
 }
 exports.detail = (req,res,next)=>{
-        req.collections.agent.find({}).toArray((err,result)=>{
+        req.collections.agent.find({}).limit(20).toArray((err,result)=>{
                 if(err) return next(new Error('no data'))
                 else{
                         res.send(result);

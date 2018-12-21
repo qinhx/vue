@@ -57,4 +57,8 @@ export default {
     line-height: 80px;
     margin-left: 40px;
   }
+  span{
+    font-size: 1.5em;
+    font-family: 'Courier New', Courier, monospace
+  }
 </style>

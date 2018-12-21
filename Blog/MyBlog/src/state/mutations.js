@@ -4,7 +4,7 @@ export default{
         axios.get('/api/detial').then(res=>{
            state.detail = res.data
         }).catch(err=>{
-
+            console.log(err)
         })
     }
 }
