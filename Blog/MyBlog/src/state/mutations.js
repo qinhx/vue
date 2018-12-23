@@ -13,17 +13,20 @@ export default{
         })
     },
     getCategory(state,category){
-        console.log("-------for it -----",category)
+        if(category=="back"){
+            category = category+"end";
+        }else{
+            category= category
+        }
         axios.get('/api/cateItem', {
             params:{
              cate:category
             }
         }).then(res=>{
             state.cateItem = res.data;
-            console.log(state.cateItem)
         }).catch(err=>{
-            console.log("????????")
-        })
+            return err
+        });
     }
 
 }

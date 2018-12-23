@@ -6,7 +6,7 @@
             <el-col :span="3">
               <h4 style="margin-top:33px">Welcome to My Blog</h4>
             </el-col>
-            <el-col :offset="10" :span="8">
+            <el-col :offset="2" :span="19">
             <el-menu mode="horizontal" background-color="grey" router="true" text-color="black">
               <el-menu-item index="home">
                 <span>home</span>
@@ -29,7 +29,7 @@
       </el-main>
       <el-footer>
           <div>
-            <p>copyright&copy if you think it will be useful for you,you can find the resource code in my<a href="https://github.com/qinhx/">github</a></p>
+            <p>copyright&copy if you think it will be useful for you,you can find the resource code in my <a href="https://github.com/qinhx/">github</a> .</p>
           </div>
       </el-footer>
     </el-container>
@@ -55,7 +55,6 @@ export default {
   a{
     text-decoration: none;
     line-height: 80px;
-    margin-left: 40px;
   }
   span{
     font-size: 1.5em;
