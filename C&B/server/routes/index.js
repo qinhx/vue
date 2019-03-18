@@ -41,7 +41,13 @@ router.route('/getdata').get((req,res,next)=>{
       res.send(data)
     })
 })
-
+router.route('/getById').get((req,res,next)=>{
+    var id = mongoose.Types.ObjectId(req.query.id)
+    blog.find({"_id":id},(err,da)=>{
+      if(err) res.send('err')
+      res.send(da) 
+    })
+})
 var mydata = [
   {
     id:1,
@@ -49,7 +55,11 @@ var mydata = [
     date: '2019.3.2',
     article:'# Hello world',
     tag:[
-     { leetcode:['blue','red']}
+     {
+       value:'java',
+       beginColor:"red",
+       endColor: 'blue'
+     }
     ]
   },
   {
@@ -58,7 +68,11 @@ var mydata = [
     date: '2019.3.2',
     article:'# I love it',
     tag:[
-     { leetcode:['blue','red']}
+      {
+        value:'leetcode',
+        beginColor:"red",
+        endColor: 'blue'
+      }
     ]
   },
   {
@@ -67,7 +81,16 @@ var mydata = [
     date: '2019.3.2',
     article:'# Good',
     tag:[
-     { leetcode:['blue','red']}
+      {
+        value:'leetcode',
+        beginColor:"red",
+        endColor: 'green'
+      },
+      {
+        value:'css',
+        beginColor:"green",
+        endColor: 'blue'
+      }
     ]
   }
 ]
