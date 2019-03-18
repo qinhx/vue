@@ -11,12 +11,14 @@ var blog = db.model('blog',new mongoose.Schema({
   tag:Array
 }));
 router.route('/insert').post((req,res,next)=>{
-  var query = req.query;
+  var query = req.body;
   blog.create(query,(err,da)=>{
-    if(err) console.log('this is error when insert into db')
-
+    if(err) {
+      console.log('this is error when insert into db')
+      res.send('插入失败')
+      }
+    res.send(da)
   })
-  res.send('hello')
 })
 router.route('/update').post((req,res,next)=>{
     blog.updateOne({id:"1"},req.query,(err,raw)=>{
@@ -50,7 +52,6 @@ router.route('/getById').get((req,res,next)=>{
 })
 var mydata = [
   {
-    id:1,
     title:'leetcode 1001',
     date: '2019.3.2',
     article:'# Hello world',
@@ -58,12 +59,10 @@ var mydata = [
      {
        value:'java',
        beginColor:"red",
-       endColor: 'blue'
      }
     ]
   },
   {
-    id:1,
     title:'leetcode 103',
     date: '2019.3.2',
     article:'# I love it',
@@ -71,12 +70,10 @@ var mydata = [
       {
         value:'leetcode',
         beginColor:"red",
-        endColor: 'blue'
       }
     ]
   },
   {
-    id:1,
     title:'leetcode 不知道',
     date: '2019.3.2',
     article:'# Good',
@@ -84,12 +81,10 @@ var mydata = [
       {
         value:'leetcode',
         beginColor:"red",
-        endColor: 'green'
       },
       {
         value:'css',
         beginColor:"green",
-        endColor: 'blue'
       }
     ]
   }
