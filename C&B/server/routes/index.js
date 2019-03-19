@@ -4,7 +4,7 @@ var mongoose = require('mongoose')
 
 var db = mongoose.createConnection('mongodb://localhost:27017/blog',{useNewUrlParser: true });
 var blog = db.model('blog',new mongoose.Schema({
-  id:String,
+  id:mongoose.ObjectId,
   title:String,
   date:String,
   article:String,
@@ -39,13 +39,52 @@ router.route('/remove').get((req,res,next)=>{
     })
 })
 router.route('/getdata').get((req,res,next)=>{
-    blog.find(req.query,(err,data)=>{
-      res.send(data)
+    var page = req.query.index
+    if(req.query.tag){
+      var tag = req.query.tag
+      var reg = new RegExp(tag,'i')
+      blog.count({
+        '$or':[
+         {"tag":{'$elemMatch':{"value":{'$regex':reg}}}},
+         {'date':{'$regex':reg}},
+         {'title':{'$regex':reg}},
+         {'article':{'$regex':reg}}
+        ]
+      }).exec((err,count)=>{
+          blog.find({
+            '$or':[
+            {"tag":{'$elemMatch':{"value":{'$regex':reg}}}},
+            {'date':{'$regex':reg}},
+            {'title':{'$regex':reg}},
+            {'article':{'$regex':reg}}
+            ]
+          })
+              .limit(5)
+              .sort({'_id':-1})
+              .skip(5*page)
+              .exec((err,data)=>{
+                if(err) res.send('err')
+                else res.send({'data':data,'count':count})
+              })
+      })
+
+    }
+    else {
+     blog.count({}).exec((err,count)=>{
+      blog.find({})
+      .limit(5)
+      .sort({'_id':-1})
+      .skip(5*page)
+      .exec((err,data)=>{
+        if(err) res.send('err')
+        else res.send({'data':data,'count':count})
     })
+     })
+  }
 })
+
 router.route('/getById').get((req,res,next)=>{
-    var id = mongoose.Types.ObjectId(req.query.id)
-    blog.find({"_id":id},(err,da)=>{
+    blog.find({"_id":req.query.id},(err,da)=>{
       if(err) res.send('err')
       res.send(da) 
     })
