@@ -1,0 +1,40 @@
+doctype html
+html
+  head
+    title= appTitle
+    script(type="text/javascript", src="/js/jquery-2.0.3.min.js")
+    link(rel="stylesheet", href="/css/bootstrap-3.0.2/css/bootstrap.min.css")
+    link(rel="stylesheet", href="/css/bootstrap-3.0.2/css/bootstrap-theme.min.css")
+    link(rel="stylesheet", href="/css/style.css")
+    script(type="text/javascript", src="/css/bootstrap-3.0.2/js/bootstrap.min.js")
+    script(type="text/javascript", src="/js/blog.js")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  body
+    #wrap
+      block header
+          .col-md-12.layOutHeader
+              a.h2(href="#") all
+              a.h2(href="#") actegories
+              a.h2(href="#") note
+              a.h2(href="#") archives
+              a.h2(href="#" ) logout
+      block content
+    block footer
+      footer
+        .container
+          p
+            | Copyright &copy if you think it will be useful for you,
+            | you can find it in my 
+            a(href="https://github.com/qinhx") github
+            |.
+    style.
+      .layOutHeader{
+        padding-right:20%;
+        background-color:black;
+      }
+      .col-md-12 a{
+        margin-left:20px;
+        color:white !important;
+        padding:10px;
+        display:inline-block;
+      }

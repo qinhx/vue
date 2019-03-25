@@ -1,0 +1,15 @@
+extends admin
+block messages
+    .container
+        form(action="/api/category", method="post")
+            h3 Title
+            input#cateTitle.form-control(type="text", name="title")
+            h3 Message
+            textarea#cateMessage.form-control(name="", cols="30", rows="10")
+            h3 summary
+            input#summary.form-control(type="text", name="summary")
+            span github 
+            input#archiveGithubLink.form-control(type="text", name="github")
+            span 标签
+                input#cateLabel.form-control(type="text", name="label")
+            button(type="submit") 提交

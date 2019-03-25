@@ -1,0 +1,14 @@
+extends layout
+block content
+    .col-md-1
+        ul.nav.nav-pills.nav-stacked
+            li
+                a(href="/note") 日记
+            li
+                a(href="/category") 分类
+            li
+                a(href="/done") 已发表
+            li 
+                a(href="/archives") 项目
+    .col-md-10
+        block messages

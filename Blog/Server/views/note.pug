@@ -1,0 +1,9 @@
+extends admin
+block messages
+    .container
+        form(action="/api/note", method="post")
+            h3 Title
+            input#NoteTitle.form-control(type="text", name="title")
+            h3 Message
+            textarea#NoteMessage.form-control(name="message", cols="30", rows="10")
+            button.btn.btn-default(type="submit") 提交

@@ -1,0 +1,16 @@
+extends layout
+block header
+block content
+  .col-md-4.col-md-offset-4
+    h2 Log in
+      form(action="/login", method="post")
+        p
+          input#userID.form-control(type="text", name="userId" placeholder="请输入用户名")
+        p
+          input#pwd.form-control(type="password", name="pwd")
+        p
+          button.btn.btn-lg.btn-primary.btn-block(type="submit") Log in
+    style.
+      .col-md-4{
+        margin-top:10%;
+      }
