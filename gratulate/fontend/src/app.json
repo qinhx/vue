@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/logs/main",
+    "pages/me/main",
+    "pages/wallet/main",
+    "pages/mycar/main",
+    "pages/myorder/main",
+    "pages/charge/main",
+    "pages/chargedays/main",
+    "pages/addCar/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationStyle":"custom"
+  }
+}
