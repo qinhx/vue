@@ -8,7 +8,7 @@ var wallet = require('./routes/wallet')
 var question = require('./routes/question')
 var record = require('./routes/record')
 var app = express();
-
+var expressWs = require('express-ws')(app)
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -39,4 +39,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+ module.exports = app;
+

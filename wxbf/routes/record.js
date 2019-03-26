@@ -2,7 +2,11 @@ var express = require('express');
 var router=  express.Router();
 var mongoose = require('mongoose');
 var getopenid = require('../public/javascripts/requetP')
+var expressWs = require('express-ws')
 var db = mongoose.createConnection('mongodb://www.qinhx.cn:27017/wx',{useNewUrlParser:true});
+var events =  require('events')
+var eventEmitter = new events.EventEmitter();
+expressWs(router)
 var record = db.model('record',{
     openid:String,
     days:String,
@@ -10,7 +14,8 @@ var record = db.model('record',{
     hours:String,
     cost:String,
     LP:Array,
-    money:String
+    money:String,
+    date:String
 })
 router.route('').get((req,res,next)=>{
     record.findById(req.query.id,(err,data)=>{
@@ -57,6 +62,7 @@ router.route('').get((req,res,next)=>{
         ,req.body,options,(err,raw)=>{
         if(err) res.send(err);
         else {
+            console.log(raw)
             var obj = {
                 days:raw.days,
                 id: raw._id,
@@ -64,10 +70,30 @@ router.route('').get((req,res,next)=>{
                 hours: raw.hours,
                 cost:raw.cost,
                 LP:raw.LP,
-                money:raw.money
+                money:raw.money,
+                date:raw.date
             }
-            res.send(obj)
+            if(obj.date) eventEmitter.emit('dataChanged',obj.id)
+            res.send(obj) 
         }
+    })
+})
+router.ws('',(ws,req)=>{
+    console.log('hello world')
+    ws.on('open',function(event){
+        console.log('ws is openning')
+    })
+    ws.on('message',event=>{
+        console.log('message is get')
+        eventEmitter.on('dataChanged',function(id){
+            record.findById(id,(err,data)=>{
+                if(err) ws.send(err);
+                ws.send(data)
+            })
+        })
+    })
+    ws.on('close',event=>{
+        console.log(event)
     })
 })
 module.exports = router;
