@@ -13,7 +13,7 @@ const store = new Vuex.Store({
   mutations: {
     getCode (state) {
       getLogin().then(res => {
-        state.code = res.code
+        console.log(res.code)
         wx.request({
           url: 'http://localhost:3000/record',
           method: 'POST',
@@ -22,7 +22,7 @@ const store = new Vuex.Store({
           },
           success (respones) {
             state.userInfo = respones.data
-            console.log(respones.data)
+            console.log(state)
           }
         })
       }).catch(err => {

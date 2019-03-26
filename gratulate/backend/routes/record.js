@@ -1,10 +1,10 @@
 var express = require('express');
 var router=  express.Router();
 var mongoose = require('mongoose');
-var getopenid = require('../public/javascripts/requetP')
+var events = require('../events')
 var db = mongoose.createConnection('mongodb://www.qinhx.cn:27017/wx',{useNewUrlParser:true});
-var events =  require('events')
-var eventEmitter = new events.EventEmitter();
+var getopenid = require('../public/javascripts/requetP')
+var eventEmitter = events
 var record = db.model('record',{
     openid:String,
     days:String,
@@ -13,7 +13,8 @@ var record = db.model('record',{
     cost:String,
     LP:Array,
     money:String,
-    date:String
+    dateIn:String,
+    dateOut:String
 })
 router.route('').get((req,res,next)=>{
     record.findById(req.query.id,(err,data)=>{
@@ -60,7 +61,6 @@ router.route('').get((req,res,next)=>{
         ,req.body,options,(err,raw)=>{
         if(err) res.send(err);
         else {
-            console.log(raw)
             var obj = {
                 days:raw.days,
                 id: raw._id,
@@ -69,9 +69,12 @@ router.route('').get((req,res,next)=>{
                 cost:raw.cost,
                 LP:raw.LP,
                 money:raw.money,
-                date:raw.date
+                dateIn:raw.dateIn,
+                dateOut:raw.dateOut
             }
-            if(obj.date) eventEmitter.emit('dataChanged',obj.id)
+            if(obj.dateIn) {
+                eventEmitter.emit("dataChanged",obj.id)
+            }
             res.send(obj) 
         }
     })

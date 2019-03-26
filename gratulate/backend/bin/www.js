@@ -4,9 +4,9 @@ let WSServer = require('ws').Server;
 let server = require('http').createServer();
 let app = require('../app');
 var mongoose = require('mongoose');
+var events = require('../events')
 var db = mongoose.createConnection('mongodb://www.qinhx.cn:27017/wx',{useNewUrlParser:true});
-var events =  require('events')
-var eventEmitter = new events.EventEmitter();
+var eventEmitter = events
 var record = db.model('record',{
   openid:String,
   days:String,
@@ -30,16 +30,18 @@ wss.on('connection', function connection(ws) {
   console.log('hello world')
   ws.on('open',function(event){
       console.log('ws is openning')
+      ws.send('Hello I am from backend')
   })
   ws.on('message',event=>{
       console.log(event)
-      eventEmitter.on('dataChanged',function(id){
-          record.findById(id,(err,data)=>{
-              if(err) ws.send(err);
-              ws.send(data)
-          })
-      })
   })
+  eventEmitter.on("dataChanged",function(id){
+    record.findById(id,(err,data)=>{
+        if(err) ws.send(err);
+        var str = JSON.stringify(data)
+         ws.send(str)
+    })
+})
   ws.on('close',event=>{
       console.log(event)
   })

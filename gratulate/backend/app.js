@@ -6,10 +6,11 @@ var logger = require('morgan');
 var wallet = require('./routes/wallet')
 var question = require('./routes/question')
 var record = require('./routes/record')
-
-
+var ejs =  require('ejs')
 var app = express();
-
+app.set('views', path.join(__dirname, 'views'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -20,7 +21,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/question',question)
 app.use('/record',record)
 app.use('/wallet',wallet)
-
+app.get('/',(req,res)=>{
+  res.render('index')
+})
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -65,6 +65,7 @@ export default {
   },
   created () {
     this.getCode()
+    let socketOpen =false
     wx.connectSocket({
       url: 'ws://localhost:3000/record',
       header: {
@@ -72,6 +73,14 @@ export default {
         'Upgrade': 'websocket',
         'Connection': 'Upgrade'
       }
+    })
+    wx.onSocketOpen(function (res) {
+      socketOpen = true;
+
+    })
+    wx.onSocketMessage(function (res) {
+      var d = JSON.parse(res.data)
+      console.log(d)
     })
   },
   mounted () {
