@@ -13,10 +13,10 @@
             var url="http://localhost:3000/record"
             xhr.open('PUT',url,true)
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            var date = new Date()
+            var timestap  = Date.parse(new Date());            
             xhr.send(JSON.stringify({
-                            "id":"5c97a1a3af25260c1fd4de6f",
-                            "dateIn":date,
+                            "id":"5c9a3c39e0c47b72638fee12",
+                            "dateIn":timestap,
                             "payOrNot":"1"
                         }));
         })
@@ -28,10 +28,11 @@
             var url="http://localhost:3000/record"
             xhr.open('PUT',url,true)
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            var date = new Date()
+            var timestap  = Date.parse(new Date());
+
             xhr.send(JSON.stringify({
-                            "id":"5c97a1a3af25260c1fd4de6f",
-                            "dateOut":date,
+                            "id":"5c9a3c39e0c47b72638fee12",
+                            "dateOut":timestap,
                             "payOrNot":"2"
                         }));
         })
@@ -52,6 +53,9 @@
             console.log(err)
         })
     }
+    var s = "Hello world"
+    var arr = [].concat(s)
+    console.log(arr)
 </script>
 <body>
     <button id="btn1" onclick="In()">入场</button><button id="btn2" onclick="Out()">出场</button>

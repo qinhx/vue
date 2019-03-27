@@ -19,7 +19,7 @@ export default {
     add: function () {
       if (this.LP !== 0) {
         if (store.state.userInfo.id) this.id = store.state.userInfo.id
-        var LP = this.LP
+        var LP = store.state.userInfo.LP ? store.state.userInfo.LP.concat(this.LP):[].concat(this.LP)
         wx.request({
           url: 'http://localhost:3000/record',
           method: 'PUT',

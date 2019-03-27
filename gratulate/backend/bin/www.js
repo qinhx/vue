@@ -27,7 +27,7 @@ let wss = new WSServer({
 server.on('request', app);
 
 wss.on('connection', function connection(ws) {
-  console.log('hello world')
+  console.log("state is : " ,ws.readyState)
   ws.on('open',function(event){
       console.log('ws is openning')
       ws.send('Hello I am from backend')
@@ -36,12 +36,17 @@ wss.on('connection', function connection(ws) {
       console.log(event)
   })
   eventEmitter.on("dataChanged",function(id){
-    record.findById(id,(err,data)=>{
-        if(err) ws.send(err);
-        var str = JSON.stringify(data)
-         ws.send(str)
-    })
-})
+    console.log("Data Changed :",ws.readyState)
+      if(ws.readyState != 1){
+        console.log('websocket is closed')
+      }else{
+        record.findById(id,(err,data)=>{
+          if(err) ws.send(err);
+          var str = JSON.stringify(data)
+           ws.send(str)
+      })
+      }
+  })
   ws.on('close',event=>{
       console.log(event)
   })

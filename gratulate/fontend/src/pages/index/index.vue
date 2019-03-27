@@ -5,8 +5,16 @@
       
       <div>
         <div class="infoHead">
-          <span class="chrgeCar">计费车辆 :<image src="/static/tabs/home.png"/></span>
+          <div style="overflow: hidden;">
+            <span class="chrgeCar">计费车辆 :<image src="/static/tabs/home.png"/></span>
           <span class="history" @click="goHistory()" >历史记录</span>
+          </div>
+          <div>
+            <p>入场时间：{{dateIn}} </p> <p> 出场时间: {{dateOut}} </p>
+            <p>用时：{{getHour}} 小时</p>
+            <span>共计：{{getCost}} </span>
+            <button @click="submitBill()">支付</button>
+          </div>
         </div>
       </div>
       <div class=" flexItem">
@@ -61,6 +69,61 @@ export default {
       wx.navigateTo({
         url: '/pages/me/main'
       })
+    },
+    submitBill () {
+      console.log(store.state.userInfo)
+          wx.request({
+          url: 'http://localhost:3000/record',
+          method: 'PUT',
+          data: store.state.userInfo,
+          success (response) {
+            console.log("成功支付")
+          }
+        })
+    }
+  },
+  computed: {
+    dateIn () {
+      if(store.state.userInfo.dateIn){
+        var date = new Date(Number(store.state.userInfo.dateIn))
+        console.log(date)
+         var Y = date.getFullYear() + '-';
+         var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+         var D = date.getDate() + ' ';
+         var h = date.getHours() + ':';
+         var m = date.getMinutes() + ':';
+         var s = date.getSeconds(); 
+         return Y+M+D+h+m+s
+      }else return '虚位以待'
+    },
+    dateOut () {
+        if(store.state.userInfo.dateOut){
+        var date = new Date(Number(store.state.userInfo.dateOut))
+         var Y = date.getFullYear() + '-';
+         var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+         var D = date.getDate() + ' ';
+         var h = date.getHours() + ':';
+         var m = date.getMinutes() + ':';
+         var s = date.getSeconds(); 
+         return Y+M+D+h+m+s
+      }else return '虚位以待'
+    },
+    getHour () {
+      if(store.state.userInfo.dateOut){
+        let ms = store.state.userInfo.dateOut - store.state.userInfo.dateIn;
+        var time = ms/1000;
+        return parseFloat(time/3600.0)<0.5 ? 0.5: parseFloat(time/36).toFixed(1)
+      }
+    },
+    getCost () {
+      if (this.getHour) {
+        store.state.userInfo.cost = this.getHour * 10;
+        return this.getHour * 10
+      }
+      else {
+        store.state.userInfo.cost = 0
+        return 0;
+      }
     }
   },
   created () {
@@ -76,15 +139,14 @@ export default {
     })
     wx.onSocketOpen(function (res) {
       socketOpen = true;
-
     })
     wx.onSocketMessage(function (res) {
       var d = JSON.parse(res.data)
-      console.log(d)
+     store.state.userInfo = d;
+     console.log(store.state.userInfo)
     })
   },
   mounted () {
-
   }
 }
 </script>
@@ -135,6 +197,7 @@ span{
     background-color: white;
     margin: 10px auto;
     border-radius: 10px;
+   
   }
   .chrgeCar{
     float: left;

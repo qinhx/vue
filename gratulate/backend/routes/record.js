@@ -35,6 +35,7 @@ router.route('').get((req,res,next)=>{
                 res.send(err);
             }
             else {
+                
                 var obj = {
                     days:raw.days,
                     id: raw._id,
@@ -79,22 +80,4 @@ router.route('').get((req,res,next)=>{
         }
     })
 })
-// router.ws('',(ws,req)=>{
-//     console.log('hello world')
-//     ws.on('open',function(event){
-//         console.log('ws is openning')
-//     })
-//     ws.on('message',event=>{
-//         console.log('message is get')
-//         eventEmitter.on('dataChanged',function(id){
-//             record.findById(id,(err,data)=>{
-//                 if(err) ws.send(err);
-//                 ws.send(data)
-//             })
-//         })
-//     })
-//     ws.on('close',event=>{
-//         console.log(event)
-//     })
-// })
 module.exports = router;

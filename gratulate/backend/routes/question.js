@@ -18,7 +18,6 @@ router.route('').delete((req,res,next)=>{
         else res.send(data)
     })
 }).put((req,res,next)=>{
-    console.log(req.query);
     question.create(req.body,(err,result)=>{
         if(err) res.send(err);
         else res.send(result)
@@ -30,7 +29,6 @@ router.route('').delete((req,res,next)=>{
         else res.send(result)
     })
 }).post((req,res,next)=>{
-    console.log(req.query);
     question.create(req.query,(err,data)=>{
         if(err) res.send(err);
         else res.send(data)

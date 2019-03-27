@@ -17,7 +17,6 @@ router.route('').get((req,res)=>{
     })
 }).post((req,res)=>{
     var options = req.query;
-    console.log(options)
     wallet.create(options,(err,data)=>{
         if(err) res.send(err);
         else res.send(data)
